@@ -2,11 +2,12 @@ package com.example.checkpointspringbootinternet.app.service;
 
 import com.example.checkpointspringbootinternet.app.data.TaskDTO;
 import com.example.checkpointspringbootinternet.app.entity.Task;
-import com.example.checkpointspringbootinternet.app.exception.ResourceNotFoundException;
+import com.example.checkpointspringbootinternet.app.exception.ResourceNotFound;
 import com.example.checkpointspringbootinternet.app.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class TaskServiceImpl implements TaskService {
     private Task convertToTask(TaskDTO taskDTO){
 
         return this.mapper.map(taskDTO, Task.class);
+    }
+
+    private Task findOrThrow(long id)throws ResourceNotFound {
+
+        /*find the task or throw an exception*/
+        return this.taskRepository.findById(id).orElseThrow(ResourceNotFound::new);
     }
     @Override
     public TaskDTO createTask(TaskDTO taskDTO) {
@@ -51,24 +58,30 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO getTaskById(long id) throws ResourceNotFoundException {
+    public TaskDTO getTaskById(long id) throws ResourceNotFound {
 
-        Task task = this.taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+        Task task = this.findOrThrow(id);
         /*convert to dto*/
         return convertToDTO(task);
     }
 
     @Override
-    public void updateTaskById(long id, TaskDTO taskDTO) {
+    public void updateTaskById(long id, TaskDTO taskDTO) throws ResourceNotFound {
 
-        Task task = this.taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
-
-        Task savedTask = this.taskRepository.save(convertToTask(taskDTO));
+        /*check if the task exists*/
+        this.findOrThrow(id);
+        /*update the task*/
+        this.taskRepository.save(convertToTask(taskDTO));
 
     }
 
+    @Transactional
     @Override
-    public void deleteTaskById(long id) {
+    public void deleteTaskById(long id) throws ResourceNotFound {
 
+        /*check if the task exists*/
+        this.findOrThrow(id);
+        /*delete the task*/
+        this.taskRepository.deleteById(id);
     }
 }

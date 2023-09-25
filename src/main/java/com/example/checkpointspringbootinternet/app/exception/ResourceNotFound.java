@@ -1,8 +1,8 @@
 package com.example.checkpointspringbootinternet.app.exception;
 
-public class ResourceNotFoundException extends Throwable{
+public class ResourceNotFound extends Throwable{
 
-    public ResourceNotFoundException(){
+    public ResourceNotFound(){
         super("resource not found");
     }
 }

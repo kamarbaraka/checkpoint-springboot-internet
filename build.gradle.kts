@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.1.4"
+    id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
 }
 
@@ -22,21 +22,20 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    compileOnly("org.projectlombok:lombok")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.1.4")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.1.4")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.1.4")
+    compileOnly("org.projectlombok:lombok:1.18.30")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.mysql:mysql-connector-j")
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+//    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation("org.modelmapper:modelmapper:3.1.1")
-
     // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

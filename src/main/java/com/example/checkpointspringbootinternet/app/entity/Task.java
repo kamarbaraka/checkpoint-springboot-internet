@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @Setter
 public class Task {
     @Id
-    @GeneratedValue(generator = "Long")
+    @GeneratedValue
     @Column(updatable = false, nullable = false)
     private Long id;
     private String title;
